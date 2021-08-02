@@ -3,8 +3,8 @@ import styles from "./FeedbackOptions.module.css";
 const FeedbackOptions = ({ options, onLeaveFeedback }) => {
   return (
     <div className={styles.container}>
-      {options.map((option) => (
-        <button key={option} onClick={() => onLeaveFeedback(option)}>
+      {options.map((option, idx) => (
+        <button key={idx} onClick={onLeaveFeedback[option]}>
           {option}
         </button>
       ))}
@@ -13,8 +13,12 @@ const FeedbackOptions = ({ options, onLeaveFeedback }) => {
 };
 
 FeedbackOptions.propTypes = {
-  options: PropTypes.array.isRequired,
-  onLeaveFeedback: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onLeaveFeedback: PropTypes.exact({
+    good: PropTypes.func.isRequired,
+    neutral: PropTypes.func.isRequired,
+    bad: PropTypes.func.isRequired,
+  }),
 };
 
 export default FeedbackOptions;
